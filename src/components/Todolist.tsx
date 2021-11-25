@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
 import {FilterType} from "../App";
 
-type TasksType = {
-  id: number
+export type TasksType = {
+  id: string
   title: string
   isDone: boolean
 }
@@ -10,28 +10,44 @@ type TasksType = {
 type PropsType = {
   title: string
   tasks: Array<TasksType>
-  removeTasks: (id: number) => void
+  removeTasks: (id: string) => void
   changeFilter: (value: FilterType) => void
+  addTask: (taskTitle: string) => void
 }
 
 const Todolist = (props: PropsType) => {
+  let [title, setTitle] = useState("");
+
+  const tasksJSX = props.tasks.map(task => {
+      return (
+      <li><input type="checkbox" checked={task.isDone}/> <span>{task.title}</span>
+        <button onClick={() => props.removeTasks(task.id)}>x</button>
+      </li>
+      )
+  })
+  const addTask = () => {
+    props.addTask(title)
+    setTitle('')
+  }
+  const changeTitle = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
+  const OnKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {if (e.key === 'Enter') addTask()}
+  const filterAll = () => props.changeFilter('all')
+  const filterActive = () => props.changeFilter('active')
+  const filterCompleted = () => props.changeFilter('completed')
+
+
   return (
     <div>
       <h3>{props.title}</h3>
       <div>
-        <input/>
-        <button>+</button>
+        <input value={title} onChange={changeTitle} onKeyPress={OnKeyPressHandler}/>
+        <button onClick={addTask}>+</button>
       </div>
-      <ul>
-        {props.tasks
-          .map(task => <li><input type="checkbox" checked={task.isDone}/> <span>{task.title}</span>
-            <button onClick={() => props.removeTasks(task.id)}>x</button>
-          </li>)}
-      </ul>
+      <ul>{tasksJSX}</ul>
       <div>
-        <button onClick={() => props.changeFilter("all")}>All</button>
-        <button onClick={() => props.changeFilter("active")}>Active</button>
-        <button onClick={() => props.changeFilter("completed")}>Completed</button>
+        <button onClick={filterAll}>All</button>
+        <button onClick={filterActive}>Active</button>
+        <button onClick={filterCompleted}>Completed</button>
       </div>
     </div>
   );
