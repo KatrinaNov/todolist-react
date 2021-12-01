@@ -6,3 +6,14 @@
 .App > div {
   margin-right: 50px;
 }
+.active {
+  background: darkgreen;
+  color: #fff;
+}
+.isDone {
+  opacity: 0.5;
+}
+.error {
+  border: 2px solid red
+}
+
