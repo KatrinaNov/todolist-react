@@ -1,7 +1,8 @@
 import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
 import {FilterType} from "../App";
+import MapTasks from "./MapTask";
 
-export type TasksType = {
+export type TaskType = {
   id: string
   title: string
   isDone: boolean
@@ -9,12 +10,14 @@ export type TasksType = {
 
 type PropsType = {
   title: string
-  tasks: Array<TasksType>
-  removeTasks: (id: string) => void
-  changeFilter: (value: FilterType) => void
-  addTask: (taskTitle: string) => void
+  tasks: Array<TaskType>
+  removeTask: (todolistId: string,id: string) => void
+  changeFilter: (todolistId: string, value: FilterType) => void
+  addTask: (todolistId: string, taskTitle: string) => void
   filter: FilterType
-  changeTaskStatus: (taskId: string, isDone: boolean) => void
+  changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
+  todolistId: string
+  removeTodolist: (todolistId: string) => void
 }
 
 const Todolist = (props: PropsType) => {
@@ -22,7 +25,7 @@ const Todolist = (props: PropsType) => {
   let [error, setError] = useState<boolean>(false)
 
   const addTask = () => {
-    title.trim() ? props.addTask(title.trim()) : setError(true)
+    title.trim() ? props.addTask(props.todolistId, title.trim()) : setError(true)
     setTitle('')
   }
   const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,33 +35,35 @@ const Todolist = (props: PropsType) => {
   const OnKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') addTask()
   }
-  const filterAll = () => props.changeFilter('all')
-  const filterActive = () => props.changeFilter('active')
-  const filterCompleted = () => props.changeFilter('completed')
+  const filterAll = () => props.changeFilter(props.todolistId,'all')
+  const filterActive = () => props.changeFilter(props.todolistId,'active')
+  const filterCompleted = () => props.changeFilter(props.todolistId,'completed')
   const getClassFilterButton = (filter: FilterType) => props.filter === filter ? 'active' : ''
 
   const errorClass = error ? 'error' : ''
   const errorMessage = error && <div style={{color: 'red'}}>Title is required</div>
 
-  const tasksJSX = props.tasks.map(task => {
-    const changeStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked)
-    const removeTask = () => props.removeTasks(task.id)
-    return (
-      <li key={task.id} className={task.isDone ? 'isDone' : ''}>
-        <input
-          type="checkbox"
-          checked={task.isDone}
-          onChange={changeStatus}
-        />
-        <span>{task.title}</span>
-        <button onClick={removeTask}>x</button>
-      </li>
-    )
-  })
+  // const tasksJSX = props.tasks.map(task => {
+  //   const changeStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(props.todolistId, task.id, e.currentTarget.checked)
+  //   const removeTask = () => props.removeTasks(props.todolistId, task.id)
+  //   return (
+  //     <li key={task.id} className={task.isDone ? 'isDone' : ''}>
+  //       <input
+  //         type="checkbox"
+  //         checked={task.isDone}
+  //         onChange={changeStatus}
+  //       />
+  //       <span>{task.title}</span>
+  //       <button onClick={removeTask}>x</button>
+  //     </li>
+  //   )
+  // })
 
   return (
     <div>
-      <h3>{props.title}</h3>
+      <h3>{props.title}
+      <button onClick={() => props.removeTodolist(props.todolistId)}>x</button>
+      </h3>
       <div>
         <input
           value={title}
@@ -68,7 +73,12 @@ const Todolist = (props: PropsType) => {
         <button onClick={addTask}>+</button>
         {errorMessage}
       </div>
-      <ul>{tasksJSX}</ul>
+      <MapTasks
+        tasks={props.tasks}
+        removeTask={props.removeTask}
+        todolistId={props.todolistId}
+        changeTaskStatus={props.changeTaskStatus}
+      />
       <div>
         <button onClick={filterAll} className={getClassFilterButton('all')}>All</button>
         <button onClick={filterActive} className={getClassFilterButton('active')}>Active</button>
