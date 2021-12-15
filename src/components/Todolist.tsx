@@ -1,6 +1,7 @@
-import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
+import React from 'react';
 import {FilterType} from "../App";
 import MapTasks from "./MapTask";
+import AddItemForm from "./AddItemForm";
 
 export type TaskType = {
   id: string
@@ -21,58 +22,30 @@ type PropsType = {
 }
 
 const Todolist = (props: PropsType) => {
-  let [title, setTitle] = useState("");
-  let [error, setError] = useState<boolean>(false)
 
-  const addTask = () => {
-    title.trim() ? props.addTask(props.todolistId, title.trim()) : setError(true)
-    setTitle('')
-  }
-  const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.currentTarget.value)
-    setError(false)
-  }
-  const OnKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') addTask()
-  }
   const filterAll = () => props.changeFilter(props.todolistId,'all')
   const filterActive = () => props.changeFilter(props.todolistId,'active')
   const filterCompleted = () => props.changeFilter(props.todolistId,'completed')
   const getClassFilterButton = (filter: FilterType) => props.filter === filter ? 'active' : ''
 
-  const errorClass = error ? 'error' : ''
-  const errorMessage = error && <div style={{color: 'red'}}>Title is required</div>
+  const addTaskTitle = (title: string) => {props.addTask(props.todolistId, title)}
 
-  // const tasksJSX = props.tasks.map(task => {
-  //   const changeStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(props.todolistId, task.id, e.currentTarget.checked)
-  //   const removeTask = () => props.removeTasks(props.todolistId, task.id)
-  //   return (
-  //     <li key={task.id} className={task.isDone ? 'isDone' : ''}>
-  //       <input
-  //         type="checkbox"
-  //         checked={task.isDone}
-  //         onChange={changeStatus}
-  //       />
-  //       <span>{task.title}</span>
-  //       <button onClick={removeTask}>x</button>
-  //     </li>
-  //   )
-  // })
 
   return (
     <div>
       <h3>{props.title}
       <button onClick={() => props.removeTodolist(props.todolistId)}>x</button>
       </h3>
-      <div>
-        <input
-          value={title}
-          onChange={changeTitle}
-          onKeyPress={OnKeyPressHandler}
-          className={errorClass}/>
-        <button onClick={addTask}>+</button>
-        {errorMessage}
-      </div>
+      <AddItemForm addItemCallback={addTaskTitle}/>
+      {/*<div>*/}
+      {/*  <input*/}
+      {/*    value={title}*/}
+      {/*    onChange={changeTitle}*/}
+      {/*    onKeyPress={OnKeyPressHandler}*/}
+      {/*    className={errorClass}/>*/}
+      {/*  <button onClick={addTask}>+</button>*/}
+      {/*  {errorMessage}*/}
+      {/*</div>*/}
       <MapTasks
         tasks={props.tasks}
         removeTask={props.removeTask}
@@ -89,3 +62,4 @@ const Todolist = (props: PropsType) => {
 }
 
 export default Todolist;
+
