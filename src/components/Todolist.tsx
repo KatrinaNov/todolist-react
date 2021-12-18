@@ -2,6 +2,7 @@ import React from 'react';
 import {FilterType} from "../App";
 import MapTasks from "./MapTask";
 import AddItemForm from "./AddItemForm";
+import EditableSpan from "./EditableSpan";
 
 export type TaskType = {
   id: string
@@ -12,50 +13,50 @@ export type TaskType = {
 type PropsType = {
   title: string
   tasks: Array<TaskType>
-  removeTask: (todolistId: string,id: string) => void
+  removeTask: (todolistId: string, id: string) => void
   changeFilter: (todolistId: string, value: FilterType) => void
   addTask: (todolistId: string, taskTitle: string) => void
   filter: FilterType
   changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
   todolistId: string
   removeTodolist: (todolistId: string) => void
+  updateTaskTitle: (todolistId: string, taskId: string, title: string) => void
+  upDateTodolistTitle: (todolistId: string, title: string) => void
 }
 
 const Todolist = (props: PropsType) => {
 
-  const filterAll = () => props.changeFilter(props.todolistId,'all')
-  const filterActive = () => props.changeFilter(props.todolistId,'active')
-  const filterCompleted = () => props.changeFilter(props.todolistId,'completed')
+  const changeFilterHandler = (filter:FilterType) => props.changeFilter(props.todolistId, filter)
   const getClassFilterButton = (filter: FilterType) => props.filter === filter ? 'active' : ''
 
-  const addTaskTitle = (title: string) => {props.addTask(props.todolistId, title)}
-
+  const addTaskTitle = (title: string) => {
+    props.addTask(props.todolistId, title)
+  }
+  const upDateTodolistTitle = (title: string) => {
+    props.upDateTodolistTitle(props.todolistId, title);
+  }
+  const removeTodolist = () => props.removeTodolist(props.todolistId)
 
   return (
     <div>
-      <h3>{props.title}
-      <button onClick={() => props.removeTodolist(props.todolistId)}>x</button>
+      <h3>
+        <EditableSpan title={props.title} upDateItemTitle={upDateTodolistTitle}/>
+        <button onClick={removeTodolist}>x</button>
       </h3>
+
       <AddItemForm addItemCallback={addTaskTitle}/>
-      {/*<div>*/}
-      {/*  <input*/}
-      {/*    value={title}*/}
-      {/*    onChange={changeTitle}*/}
-      {/*    onKeyPress={OnKeyPressHandler}*/}
-      {/*    className={errorClass}/>*/}
-      {/*  <button onClick={addTask}>+</button>*/}
-      {/*  {errorMessage}*/}
-      {/*</div>*/}
+
       <MapTasks
         tasks={props.tasks}
         removeTask={props.removeTask}
         todolistId={props.todolistId}
         changeTaskStatus={props.changeTaskStatus}
+        updateTaskTitle={props.updateTaskTitle}
       />
       <div>
-        <button onClick={filterAll} className={getClassFilterButton('all')}>All</button>
-        <button onClick={filterActive} className={getClassFilterButton('active')}>Active</button>
-        <button onClick={filterCompleted} className={getClassFilterButton('completed')}>Completed</button>
+        <button onClick={() => changeFilterHandler('all')} className={getClassFilterButton('all')}>All</button>
+        <button onClick={() => changeFilterHandler('active')} className={getClassFilterButton('active')}>Active</button>
+        <button onClick={() => changeFilterHandler('completed')} className={getClassFilterButton('completed')}>Completed</button>
       </div>
     </div>
   );
