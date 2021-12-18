@@ -3,6 +3,7 @@ import {FilterType} from "../App";
 import MapTasks from "./MapTask";
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
+import {Button, styled} from "@mui/material";
 
 export type TaskType = {
   id: string
@@ -24,6 +25,25 @@ type PropsType = {
   upDateTodolistTitle: (todolistId: string, title: string) => void
 }
 
+const FilterButton = styled(Button)({
+  fontSize: '14px',
+  padding: '3px 15px',
+  minWidth: 'auto',
+  textTransform: 'none',
+  backgroundColor: 'transparent',
+  borderColor: '#aaa',
+  color: '#aaa',
+  '&:hover': {
+    color: 'green',
+    borderColor: 'green',
+  },
+  '&.active': {
+    backgroundColor: 'green',
+    borderColor: 'green',
+    color: 'white'
+  },
+});
+
 const Todolist = (props: PropsType) => {
 
   const changeFilterHandler = (filter:FilterType) => props.changeFilter(props.todolistId, filter)
@@ -39,12 +59,12 @@ const Todolist = (props: PropsType) => {
 
   return (
     <div>
+      <button onClick={removeTodolist} className={'deleteTodolist'}>x</button>
       <h3>
         <EditableSpan title={props.title} upDateItemTitle={upDateTodolistTitle}/>
-        <button onClick={removeTodolist}>x</button>
       </h3>
 
-      <AddItemForm addItemCallback={addTaskTitle}/>
+      <AddItemForm addItemCallback={addTaskTitle} placeholder={'Добавьте задачу...'}/>
 
       <MapTasks
         tasks={props.tasks}
@@ -53,10 +73,31 @@ const Todolist = (props: PropsType) => {
         changeTaskStatus={props.changeTaskStatus}
         updateTaskTitle={props.updateTaskTitle}
       />
-      <div>
-        <button onClick={() => changeFilterHandler('all')} className={getClassFilterButton('all')}>All</button>
-        <button onClick={() => changeFilterHandler('active')} className={getClassFilterButton('active')}>Active</button>
-        <button onClick={() => changeFilterHandler('completed')} className={getClassFilterButton('completed')}>Completed</button>
+      <div className={'buttons-block'}>
+        <FilterButton
+          onClick={() => changeFilterHandler('all')}
+          className={getClassFilterButton('all')}
+          variant="outlined"
+        >
+          All
+        </FilterButton>
+        <FilterButton
+          onClick={() => changeFilterHandler('active')}
+          className={getClassFilterButton('active')}
+          variant="outlined"
+        >
+          Active
+        </FilterButton>
+        <FilterButton
+          onClick={() => changeFilterHandler('completed')}
+          className={getClassFilterButton('completed')}
+          variant="outlined"
+        >
+          Completed
+        </FilterButton>
+        {/*<button onClick={() => changeFilterHandler('all')} className={getClassFilterButton('all')}>All</button>*/}
+        {/*<button onClick={() => changeFilterHandler('active')} className={getClassFilterButton('active')}>Active</button>*/}
+        {/*<button onClick={() => changeFilterHandler('completed')} className={getClassFilterButton('completed')}>Completed</button>*/}
       </div>
     </div>
   );

@@ -32,11 +32,9 @@ function App() {
       {id: v1(), title: "GraphQL", isDone: false},
     ],
     [todolistID2]: [
-      {id: v1(), title: "HTML&CSS2", isDone: true},
-      {id: v1(), title: "JS2", isDone: true},
-      {id: v1(), title: "ReactJS2", isDone: false},
-      {id: v1(), title: "Rest API2", isDone: false},
-      {id: v1(), title: "GraphQL2", isDone: false},
+      {id: v1(), title: "Milk", isDone: true},
+      {id: v1(), title: "Meat", isDone: true},
+      {id: v1(), title: "Cake", isDone: false},
     ]
   })
 
@@ -87,7 +85,8 @@ function App() {
 
   return (
     <div className="App">
-      <AddItemForm addItemCallback={addTodolist}/>
+      <AddItemForm addItemCallback={addTodolist} placeholder={'Добавьте доску...'}/>
+      <div className="App-items">
       {todolists.map(m => {
         let tasksForTodoList = tasks[m.id];
         if (m.filter === "active") {
@@ -114,6 +113,7 @@ function App() {
           />
         )
       })}
+      </div>
     </div>
   );
 }

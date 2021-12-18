@@ -1,19 +1,69 @@
 .App {
   padding: 30px;
+}
+.App-items {
   display: flex;
+  align-items: flex-start;
+  width: 100%;
+  overflow: auto;
 }
-
-.App > div {
-  margin-right: 50px;
+.App-items > div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 270px;
+  background: #eee;
+  margin: 10px 30px 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #091e4250;
 }
-.active {
-  background: darkgreen;
-  color: #fff;
-}
-.isDone {
+/*button.active {*/
+/*  background: darkgreen;*/
+/*}*/
+.is-done {
   opacity: 0.5;
 }
 .error {
   border: 2px solid red
+}
+ul {
+  padding-left: 0;
+}
+.task-item {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  margin-bottom: 5px;
+  box-shadow: 0 1px 0 #091e4240;
+}
+.deleteTodolist {
+  position: absolute;
+  right: 6px;
+  top: 0;
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  color: #aaa;
+  cursor: pointer;
+}
+.buttons-block {
+  display: flex;
+}
+.buttons-block button {
+  flex-grow: 1;
+}
+.addItemForm {
+  display: flex;
+  min-height: 40px;
+  max-width: 500px;
+}
+.addItemForm input {
+  flex-grow: 1;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+  margin-right: 5px;
+  padding: 5px;
 }
 

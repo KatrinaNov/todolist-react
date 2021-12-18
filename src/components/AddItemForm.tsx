@@ -1,6 +1,9 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, useState} from "react";
+import {Button, IconButton} from "@mui/material";
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
-type AddItemFormProps = {
+type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+type AddItemFormProps = DefaultInputPropsType &{
   addItemCallback: (title: string) => void
 }
 const AddItemForm = (props: AddItemFormProps) => {
@@ -22,13 +25,21 @@ const AddItemForm = (props: AddItemFormProps) => {
   const errorMessage = error && <div style={{color: 'red'}}>Title is required</div>
 
   return (
-    <div>
+    <div className={'addItemForm'}>
       <input
         value={title}
         onChange={changeTitle}
         onKeyPress={OnKeyPressHandler}
-        className={errorClass}/>
-      <button onClick={addTask}>+</button>
+        className={errorClass}
+        {...props}
+      />
+      <Button
+        variant="contained"
+        color="success"
+        onClick={addTask}
+        style={{padding:'5px 14px',minWidth:'auto',fontSize:'24px',lineHeight: '24px'}}
+      >+</Button>
+      {/*<button onClick={addTask}>+</button>*/}
       {errorMessage}
     </div>
   )
