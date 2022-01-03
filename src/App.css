@@ -1,6 +1,6 @@
-.App {
-  padding: 30px;
-}
+/*.App {*/
+/*  padding: 30px;*/
+/*}*/
 .App-items {
   display: flex;
   align-items: flex-start;
@@ -39,32 +39,32 @@ ul {
   margin-bottom: 5px;
   box-shadow: 0 1px 0 #091e4240;
 }
-.deleteTodolist {
-  position: absolute;
-  right: 6px;
-  top: 0;
-  border: none;
-  background: transparent;
-  font-size: 24px;
-  color: #aaa;
-  cursor: pointer;
-}
+/*.deleteTodolist {*/
+/*  position: absolute;*/
+/*  right: 6px;*/
+/*  top: 0;*/
+/*  border: none;*/
+/*  background: transparent;*/
+/*  font-size: 24px;*/
+/*  color: #aaa;*/
+/*  cursor: pointer;*/
+/*}*/
 .buttons-block {
   display: flex;
 }
 .buttons-block button {
   flex-grow: 1;
 }
-.addItemForm {
-  display: flex;
-  min-height: 40px;
-  max-width: 500px;
-}
+/*.addItemForm {*/
+/*  display: flex;*/
+/*  min-height: 40px;*/
+/*  max-width: 500px;*/
+/*}*/
 .addItemForm input {
   flex-grow: 1;
-  border-radius: 5px;
-  border: 1px solid #aaa;
-  margin-right: 5px;
-  padding: 5px;
+  /*border-radius: 5px;*/
+  /*border: 1px solid #aaa;*/
+  /*margin-right: 5px;*/
+  /*padding: 5px;*/
 }
 

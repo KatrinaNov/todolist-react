@@ -3,7 +3,8 @@ import {FilterType} from "../App";
 import MapTasks from "./MapTask";
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
-import {Button, styled} from "@mui/material";
+import {Button, IconButton, styled} from "@mui/material";
+import {Delete} from "@material-ui/icons";
 
 export type TaskType = {
   id: string
@@ -25,29 +26,9 @@ type PropsType = {
   upDateTodolistTitle: (todolistId: string, title: string) => void
 }
 
-const FilterButton = styled(Button)({
-  fontSize: '14px',
-  padding: '3px 15px',
-  minWidth: 'auto',
-  textTransform: 'none',
-  backgroundColor: 'transparent',
-  borderColor: '#aaa',
-  color: '#aaa',
-  '&:hover': {
-    color: 'green',
-    borderColor: 'green',
-  },
-  '&.active': {
-    backgroundColor: 'green',
-    borderColor: 'green',
-    color: 'white'
-  },
-});
-
 const Todolist = (props: PropsType) => {
 
   const changeFilterHandler = (filter:FilterType) => props.changeFilter(props.todolistId, filter)
-  const getClassFilterButton = (filter: FilterType) => props.filter === filter ? 'active' : ''
 
   const addTaskTitle = (title: string) => {
     props.addTask(props.todolistId, title)
@@ -59,12 +40,15 @@ const Todolist = (props: PropsType) => {
 
   return (
     <div>
-      <button onClick={removeTodolist} className={'deleteTodolist'}>x</button>
+      {/*<button onClick={removeTodolist} className={'deleteTodolist'}>x</button>*/}
       <h3>
         <EditableSpan title={props.title} upDateItemTitle={upDateTodolistTitle}/>
+        <IconButton aria-label="delete">
+          <Delete fontSize="inherit" onClick={removeTodolist}/>
+        </IconButton>
       </h3>
 
-      <AddItemForm addItemCallback={addTaskTitle} placeholder={'Добавьте задачу...'}/>
+      <AddItemForm addItemCallback={addTaskTitle}/>
 
       <MapTasks
         tasks={props.tasks}
@@ -73,32 +57,12 @@ const Todolist = (props: PropsType) => {
         changeTaskStatus={props.changeTaskStatus}
         updateTaskTitle={props.updateTaskTitle}
       />
-      <div className={'buttons-block'}>
-        <FilterButton
-          onClick={() => changeFilterHandler('all')}
-          className={getClassFilterButton('all')}
-          variant="outlined"
-        >
-          All
-        </FilterButton>
-        <FilterButton
-          onClick={() => changeFilterHandler('active')}
-          className={getClassFilterButton('active')}
-          variant="outlined"
-        >
-          Active
-        </FilterButton>
-        <FilterButton
-          onClick={() => changeFilterHandler('completed')}
-          className={getClassFilterButton('completed')}
-          variant="outlined"
-        >
-          Completed
-        </FilterButton>
-        {/*<button onClick={() => changeFilterHandler('all')} className={getClassFilterButton('all')}>All</button>*/}
-        {/*<button onClick={() => changeFilterHandler('active')} className={getClassFilterButton('active')}>Active</button>*/}
-        {/*<button onClick={() => changeFilterHandler('completed')} className={getClassFilterButton('completed')}>Completed</button>*/}
+      <div>
+        <Button variant={props.filter === 'all' ?"contained":'outlined'} color="secondary" onClick={() => changeFilterHandler('all')}>All</Button>
+        <Button variant={props.filter === 'active' ?"contained":'outlined'} color="primary" onClick={() => changeFilterHandler('active')}>Active</Button>
+        <Button variant={props.filter === 'completed' ?"contained":'outlined'} color="error" onClick={() => changeFilterHandler('completed')}>Completed</Button>
       </div>
+      {/*</div>*/}
     </div>
   );
 }
