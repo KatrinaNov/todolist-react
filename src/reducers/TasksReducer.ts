@@ -1,9 +1,25 @@
 import {TasksType} from "../App";
 import {v1} from "uuid";
+import {todolistID1, todolistID2} from "./TodolistReducer";
 
 type ActionType = removeTaskACType | addTaskACType | changeTaskTitleACType | changeStatusACCType | removeAllTaskACType | addEmptyArrayOfTaskACType
 
-export const TasksReducer = (state: TasksType, action: ActionType) => {
+let initialState: TasksType = {
+  [todolistID1]: [
+    {id: v1(), title: "HTML&CSS", isDone: true},
+    {id: v1(), title: "JS", isDone: true},
+    {id: v1(), title: "ReactJS", isDone: false},
+    {id: v1(), title: "Rest API", isDone: false},
+    {id: v1(), title: "GraphQL", isDone: false},
+  ],
+  [todolistID2]: [
+    {id: v1(), title: "Milk", isDone: true},
+    {id: v1(), title: "Meat", isDone: true},
+    {id: v1(), title: "Cake", isDone: false},
+  ]
+}
+
+export const TasksReducer = (state: TasksType = initialState, action: ActionType) => {
   switch (action.type) {
     case 'REMOVE-TASK': {
       return {...state, [action.payload.todolistId]: state[action.payload.todolistId].filter(f => f.id !== action.payload.id)}
