@@ -11,7 +11,6 @@ import {
   changeFilterAC,
   changeTodolistTitleAC,
   removeTodolistAC,
-  TodolistReducer
 } from "./reducers/TodolistReducer";
 import {
   addEmptyArrayOfTaskAC,
@@ -19,7 +18,6 @@ import {
   changeStatusAC,
   changeTaskTitleAC,
   removeAllTaskAC, removeTaskAC,
-  TasksReducer
 } from "./reducers/TasksReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "./store/store";
@@ -62,11 +60,11 @@ function App() {
   // })
 
   function addTodolist(title: string) {
-    let newId = v1();
+
     // dispatchTodolists(addTodolistAC(newId,title))
     // dispatchTasks(addEmptyArrayOfTaskAC(newId))
-    dispatch(addTodolistAC(newId,title))
-    dispatch(addEmptyArrayOfTaskAC(newId))
+    dispatch(addTodolistAC(title))
+    // dispatch(addEmptyArrayOfTaskAC(newId))
   }
 
   function upDateTodolistTitle(todolistId: string, title: string) {
@@ -75,7 +73,6 @@ function App() {
 
   function removeTodolist(todolistId: string) {
     dispatch(removeTodolistAC(todolistId))
-    dispatch(removeAllTaskAC(todolistId))
   }
 
   function changeFilter(todolistId: string, value: FilterType) {
