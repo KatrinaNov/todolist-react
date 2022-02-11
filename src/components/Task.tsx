@@ -2,30 +2,34 @@ import React, {ChangeEvent, useCallback} from 'react';
 import {Checkbox, IconButton} from "@mui/material";
 import EditableSpan from "./EditableSpan";
 import {Delete} from "@mui/icons-material";
-import {TaskType} from "./Todolist";
+import {TaskStatuses, TaskType} from "../api/todolists-api";
 
 type TaskPropsType = {
   task: TaskType
   removeTask: (todolistId: string, taskId: string) => void
-  changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
+  changeTaskStatus: (todolistId: string, taskId: string, status: TaskStatuses) => void
   todolistId: string
   updateTaskTitle: (todolistId: string, taskId: string, title: string) => void
 }
 
 const Task = React.memo((props: TaskPropsType) => {
 
-  const onClickHandler = () => props.removeTask(props.todolistId, props.task.id)
+  const onClickHandler = useCallback(() => props.removeTask(props.todolistId, props.task.id), [props.removeTask, props.todolistId, props.task.id])
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    props.changeTaskStatus(props.todolistId, props.task.id, e.currentTarget.checked);
-  }
+
+  const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    let newIsDoneValue = e.currentTarget.checked
+    props.changeTaskStatus(props.todolistId, props.task.id, newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New)
+  }, [props.task.id, props.todolistId]);
+
+
   const updateTaskTitle = useCallback((taskId: string, title: string) => {
     props.updateTaskTitle(props.todolistId, taskId, title)
   }, [props.updateTaskTitle, props.todolistId])
 
-  return <li key={props.task.id} className={props.task.isDone ? "task-item is-done" : "task-item"}>
+  return <li key={props.task.id} className={props.task.status === TaskStatuses.Completed ? "task-item is-done" : "task-item"}>
     <Checkbox
-      checked={props.task.isDone}
+      checked={props.task.status === TaskStatuses.Completed}
       onChange={onChangeHandler}
       color="success" />
     <EditableSpan title={props.task.title} upDateItemTitle={(title: string) => updateTaskTitle(props.task.id, title)}/>
