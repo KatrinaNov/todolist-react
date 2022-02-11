@@ -1,6 +1,6 @@
 import {TasksType} from "../App";
 import {v1} from "uuid";
-import {addTodolistACType, removeTodolistACType, todolistID1, todolistID2} from "./TodolistReducer";
+import {addTodolistACType, removeTodolistACType, todolistID1, todolistID2} from "./todolistReducer";
 
 type ActionType = removeTaskACType
   | addTaskACType

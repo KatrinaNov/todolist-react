@@ -5,9 +5,9 @@ import {
   changeTaskTitleAC,
   removeTaskAC,
   tasksReducer
-} from "./TasksReducer";
+} from "./tasksReducer";
 import {TasksType} from "../App";
-import {addTodolistAC, removeTodolistAC} from "./TodolistReducer";
+import {addTodolistAC, removeTodolistAC} from "./todolistReducer";
 
 test('correct task should be removed', () => {
   let todolistId1 = v1();

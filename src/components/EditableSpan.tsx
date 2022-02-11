@@ -5,7 +5,7 @@ type EditableSpanPropsType = {
   upDateItemTitle: (title: string) => void
 }
 
-const EditableSpan = (props: EditableSpanPropsType) => {
+const EditableSpan = React.memo((props: EditableSpanPropsType) => {
   let [localTitle, setLocalTitle] = useState(props.title)
   let [edit, setEdit] = useState(false)
 
@@ -34,6 +34,6 @@ const EditableSpan = (props: EditableSpanPropsType) => {
       />
       : <span onDoubleClick={setActiveMode}>{props.title}</span>
   );
-};
+});
 
 export default EditableSpan;
