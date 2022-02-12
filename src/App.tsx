@@ -15,11 +15,11 @@ import {
   addTaskAC, addTaskTC,
   changeStatusAC,
   changeTaskTitleAC,
-  removeTaskTC,
+  removeTaskTC, updateTaskStatusTC,
 } from "./reducers/tasksReducer";
 import {useDispatch, useSelector} from "react-redux";
-import {RootReducerType} from "./store/store";
 import {TaskStatuses, TaskType, todolistApi} from "./api/todolists-api";
+import {AppRootStateType} from "./store/store";
 
 export type FilterType = "all" | "active" | "completed"
 export type TodolistsType = {
@@ -32,8 +32,8 @@ export type TasksType = {
 }
 
 function App() {
-  let todolists = useSelector<RootReducerType, Array<TodolistsType>>(state => state.todolists)
-  let tasks = useSelector<RootReducerType, TasksType>(state => state.tasks)
+  let todolists = useSelector<AppRootStateType, Array<TodolistsType>>(state => state.todolists)
+  let tasks = useSelector<AppRootStateType, TasksType>(state => state.tasks)
   let dispatch = useDispatch();
 
   useEffect(() => {
@@ -61,7 +61,7 @@ function App() {
   }, [])
 
   const changeTaskStatus = useCallback((todolistId: string, taskId: string, status: TaskStatuses) => {
-    dispatch(changeStatusAC(todolistId, taskId, status ))
+    dispatch(updateTaskStatusTC(todolistId, taskId, status ))
   }, [])
 
   const updateTaskTitle = useCallback((todolistId: string, taskId: string, title: string) => {

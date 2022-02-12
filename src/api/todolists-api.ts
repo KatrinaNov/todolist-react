@@ -35,9 +35,9 @@ export const todolistApi = {
   deleteTask(todolistId: string, taskId: string) {
     return instance.delete<BaseResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
   },
-  updateTaskTitle(todolistId: string, taskId: string, title: string) {
-    return instance.put<BaseResponseType, AxiosResponse<BaseResponseType>, { title: string }>(`todo-lists/${todolistId}/tasks/${taskId}`, {title})
-  },
+  updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
+    return instance.put<UpdateTaskModelType, AxiosResponse<BaseResponseType<{ item: TaskType }>>>(`todo-lists/${todolistId}/tasks/${taskId}`, model);
+  }
 }
 
 export type TodoType = {
@@ -85,4 +85,12 @@ export type TaskType = {
   todoListId: string
   order: number
   addedDate: Date
+}
+export type UpdateTaskModelType = {
+  title: string
+  description: string | null
+  status: TaskStatuses
+  priority: TaskPriorities
+  startDate: Date
+  deadline: Date | null
 }

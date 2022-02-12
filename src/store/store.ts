@@ -9,6 +9,6 @@ let rootReducer = combineReducers({
   tasks: tasksReducer
 })
 
-export type RootReducerType = ReturnType<typeof rootReducer>
+export type AppRootStateType = ReturnType<typeof rootReducer>
 
 export let store = createStore(rootReducer, applyMiddleware(thunk))
