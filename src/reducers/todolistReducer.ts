@@ -25,7 +25,6 @@ export const todolistReducer = (state: Array<TodolistsType> = initialState, acti
         filter: 'all'
       }))
     }
-
     case 'REMOVE-TODOLIST': {
       return state.filter(f => f.id !== action.payload.id)
     }

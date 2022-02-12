@@ -7,7 +7,6 @@ import {Delete} from "@material-ui/icons";
 import Task from "./Task";
 import {TaskStatuses, TaskType} from "../api/todolists-api";
 import {useDispatch} from "react-redux";
-import {fetchTodolistsTC} from "../reducers/todolistReducer";
 import {fetchTasksTC} from "../reducers/tasksReducer";
 
 type PropsType = {

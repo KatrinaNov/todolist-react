@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from "axios";
 
 const instance = axios.create({
-  baseURL: 'https://social-network.samuraijs.com/api/1.0/',
+  baseURL: 'https://social-network.samuraijs.com/api/1.1/',
   headers: {
     'API-KEY': '860b2199-293d-4424-9b31-caa190db03c4'
   },
