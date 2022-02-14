@@ -59,7 +59,7 @@ export const tasksReducer = (state: TasksType = initialState, action: ActionType
       return stateCopy;
     }
     case 'ADD-TODOLIST': {
-      return {...state, [action.payload.id]: []}
+      return {...state, [action.todolist.id]: []}
     }
     case 'REMOVE-TODOLIST': {
       let copy = {...state}
@@ -113,7 +113,6 @@ export const addTaskAC = (task: TaskType) => {
   return {
     type: 'ADD-TASK',
     task
-
   } as const
 }
 type addEmptyArrayOfTaskACType = ReturnType<typeof addEmptyArrayOfTaskAC>

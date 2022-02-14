@@ -29,7 +29,7 @@ export const todolistReducer = (state: Array<TodolistsType> = initialState, acti
       return state.filter(f => f.id !== action.payload.id)
     }
     case 'ADD-TODOLIST': {
-      return [{id: action.payload.id, title: action.payload.title, filter: 'all'}, ...state]
+      return [{...action.todolist, filter: 'all'}, ...state]
     }
     case 'CHANGE-TODOLIST-TITLE': {
       return state.map(m => m.id === action.payload.id ? {...m, title: action.payload.title} : m)
@@ -59,13 +59,10 @@ export const removeTodolistAC = (todolistId: string) => {
   } as const
 }
 export type addTodolistACType = ReturnType<typeof addTodolistAC>
-export const addTodolistAC = (title: string) => {
+export const addTodolistAC = (todolist: TodoType) => {
   return {
     type: 'ADD-TODOLIST',
-    payload: {
-      id: v1(),
-      title: title
-    }
+    todolist
   } as const
 }
 type changeTodolistTitleACType = ReturnType<typeof changeTodolistTitleAC>
@@ -95,4 +92,30 @@ export const fetchTodolistsTC = () => (dispatch: Dispatch) => {
     .then(res => {
       dispatch(setTodosAC(res.data))
     })
+}
+
+export const removeTodolistTC = (todolistId: string) => {
+  return (dispatch: Dispatch) => {
+    todolistApi.deleteTodo(todolistId)
+      .then(() => {
+        dispatch(removeTodolistAC(todolistId))
+      })
+  }
+}
+
+export const addTodolistTC = (title: string) => {
+  return (dispatch: Dispatch) => {
+    todolistApi.createTodo(title)
+      .then((res) => {
+        dispatch(addTodolistAC(res.data.data.item))
+      })
+  }
+}
+export const changeTodolistTitleTC = (todolistId: string, title: string) => {
+  return (dispatch: Dispatch) => {
+    todolistApi.updateTodoTitle(todolistId, title)
+      .then((res) => {
+        dispatch(changeTodolistTitleAC(todolistId, title))
+      })
+  }
 }

@@ -6,14 +6,13 @@ import {AppBar, Box, Button, Container, Grid, Paper, Toolbar} from "@material-ui
 import {Menu} from "@material-ui/icons";
 import {IconButton, Typography} from "@mui/material";
 import {
-  addTodolistAC,
+  addTodolistAC, addTodolistTC,
   changeFilterAC,
-  changeTodolistTitleAC, fetchTodolistsTC,
-  removeTodolistAC,
+  changeTodolistTitleAC, changeTodolistTitleTC, fetchTodolistsTC,
+  removeTodolistAC, removeTodolistTC,
 } from "./reducers/todolistReducer";
 import {
-  addTaskAC, addTaskTC,
-  changeStatusAC,
+  addTaskTC,
   changeTaskTitleAC,
   removeTaskTC, updateTaskStatusTC,
 } from "./reducers/tasksReducer";
@@ -41,15 +40,15 @@ function App() {
   }, [])
 
   const addTodolist = useCallback((title: string) => {
-    dispatch(addTodolistAC(title))
+    dispatch(addTodolistTC(title))
   }, [])
 
   const upDateTodolistTitle = useCallback((todolistId: string, title: string) => {
-    dispatch(changeTodolistTitleAC(todolistId, title))
+    dispatch(changeTodolistTitleTC(todolistId, title))
   }, [])
 
   const removeTodolist = useCallback((todolistId: string) => {
-    dispatch(removeTodolistAC(todolistId))
+    dispatch(removeTodolistTC(todolistId))
   }, [])
 
   const changeFilter = useCallback((todolistId: string, value: FilterType) => {
