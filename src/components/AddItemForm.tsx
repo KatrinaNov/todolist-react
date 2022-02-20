@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 
 type AddItemFormProps = {
   addItemCallback: (title: string) => void
+  disabled?: boolean
 }
 const AddItemForm = React.memo((props: AddItemFormProps) => {
   let [title, setTitle] = useState("");
@@ -34,7 +35,10 @@ const AddItemForm = React.memo((props: AddItemFormProps) => {
       variant="outlined"
       size="small"
     />
-  <Button color='success' variant="contained" onClick={addTask}
+  <Button color='success'
+          variant="contained"
+          onClick={addTask}
+          disabled={props.disabled}
           style={{maxWidth: '40px', maxHeight: '40px', minWidth: '30px', minHeight: '30px'}}>+</Button>
     </div>
   )

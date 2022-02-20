@@ -1,24 +1,22 @@
-/*.App {*/
-/*  padding: 30px;*/
+
+/*.App-items {*/
+/*  display: flex;*/
+/*  align-items: flex-start;*/
+/*  width: 100%;*/
+/*  overflow: auto;*/
+/*  margin-top: 30px;*/
 /*}*/
-.App-items {
-  display: flex;
-  align-items: flex-start;
-  width: 100%;
-  overflow: auto;
-  margin-top: 30px;
-}
-.App-items > div {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 270px;
-  background: #eee;
-  margin: 10px 30px 10px 0;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px #091e4250;
-}
+/*.App-items > div {*/
+/*  position: relative;*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  min-width: 270px;*/
+/*  background: #eee;*/
+/*  margin: 10px 30px 10px 0;*/
+/*  padding: 10px;*/
+/*  border-radius: 5px;*/
+/*  box-shadow: 0 0 10px #091e4250;*/
+/*}*/
 /*button.active {*/
 /*  background: darkgreen;*/
 /*}*/
@@ -39,16 +37,7 @@ ul {
   margin-bottom: 5px;
   box-shadow: 0 1px 0 #091e4240;
 }
-/*.deleteTodolist {*/
-/*  position: absolute;*/
-/*  right: 6px;*/
-/*  top: 0;*/
-/*  border: none;*/
-/*  background: transparent;*/
-/*  font-size: 24px;*/
-/*  color: #aaa;*/
-/*  cursor: pointer;*/
-/*}*/
+
 .buttons-block {
   display: flex;
 }
