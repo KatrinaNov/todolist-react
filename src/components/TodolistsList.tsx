@@ -22,39 +22,39 @@ export const TodolistsList = () => {
 
   useEffect(() => {
     dispatch(fetchTodolistsTC())
-  }, [])
+  }, [dispatch])
 
   const addTodolist = useCallback((title: string) => {
     dispatch(addTodolistTC(title))
-  }, [])
+  }, [dispatch])
 
   const upDateTodolistTitle = useCallback((todolistId: string, title: string) => {
     dispatch(changeTodolistTitleTC(todolistId, title))
-  }, [])
+  }, [dispatch])
 
   const removeTodolist = useCallback((todolistId: string) => {
     dispatch(removeTodolistTC(todolistId))
-  }, [])
+  }, [dispatch])
 
   const changeFilter = useCallback((todolistId: string, value: FilterType) => {
     dispatch(changeFilterAC(value, todolistId))
-  }, [])
+  }, [dispatch])
 
   const addTask = useCallback((todolistId: string, taskTitle: string) => {
     dispatch(addTaskTC(todolistId, taskTitle))
-  }, [])
+  }, [dispatch])
 
   const changeTaskStatus = useCallback((todolistId: string, taskId: string, status: TaskStatuses) => {
     dispatch(updateTaskTC(todolistId, taskId, {status} ))
-  }, [])
+  }, [dispatch])
 
   const updateTaskTitle = useCallback((todolistId: string, taskId: string, title: string) => {
     dispatch(updateTaskTC(todolistId, taskId, {title}))
-  }, [])
+  }, [dispatch])
 
   const removeTask = useCallback(function (id: string, todolistId: string) {
     dispatch(removeTaskTC(id, todolistId));
-  }, []);
+  }, [dispatch]);
 
 
 
@@ -66,10 +66,9 @@ export const TodolistsList = () => {
             todolists.map(tl => {
               let allTodolistTasks = tasks[tl.id];
 
-              return <Grid item>
+              return <Grid item key={tl.id}>
                 <Paper style={{padding: '10px'}}>
                   <Todolist
-                    key={tl.id}
                     todolistId={tl.id}
                     title={tl.title}
                     tasks={allTodolistTasks}

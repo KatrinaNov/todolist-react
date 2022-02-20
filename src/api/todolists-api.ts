@@ -46,7 +46,7 @@ export type TodoType = {
   title: string
   order: number
 }
-type BaseResponseType<T = {}> = {
+export type BaseResponseType<T = {}> = {
   fieldsErrors: string[]
   messages: string[]
   resultCode: number

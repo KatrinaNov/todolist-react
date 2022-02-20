@@ -29,11 +29,11 @@ const Todolist = React.memo((props: PropsType) => {
 
   let dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchTasksTC(props.todolistId))
-  }, [])
+  useEffect(() => {dispatch(fetchTasksTC(props.todolistId))}, [dispatch])
 
-  const changeFilterHandler = useCallback((filter: FilterType) => props.changeFilter(props.todolistId, filter), [props.changeFilter, props.todolistId])
+  const changeFilterHandler = useCallback((filter: FilterType) => props.changeFilter(props.todolistId, filter),
+    [props.changeFilter, props.todolistId]
+  )
 
   const addTaskTitle = useCallback((title: string) => {
     props.addTask(props.todolistId, title)
@@ -43,7 +43,9 @@ const Todolist = React.memo((props: PropsType) => {
     props.upDateTodolistTitle(props.todolistId, title);
   }, [props.upDateTodolistTitle, props.todolistId])
 
-  const removeTodolist = useCallback(() => props.removeTodolist(props.todolistId), [props.removeTodolist, props.todolistId])
+  const removeTodolist = useCallback(() => props.removeTodolist(props.todolistId),
+    [props.removeTodolist, props.todolistId]
+  )
 
   let tasksForTodolist = props.tasks
 
@@ -58,8 +60,8 @@ const Todolist = React.memo((props: PropsType) => {
     <div>
       <h3>
         <EditableSpan title={props.title} upDateItemTitle={upDateTodolistTitle}/>
-        <IconButton aria-label="delete" disabled={props.entityStatus === 'loading'}>
-          <Delete fontSize="inherit" onClick={removeTodolist}/>
+        <IconButton aria-label="delete" onClick={removeTodolist} disabled={props.entityStatus === 'loading'}>
+          <Delete fontSize="inherit" />
         </IconButton>
       </h3>
 
@@ -68,6 +70,7 @@ const Todolist = React.memo((props: PropsType) => {
         {
           tasksForTodolist.map(task => {
             return <Task
+              key={task.id}
               task={task}
               removeTask={props.removeTask}
               todolistId={props.todolistId}
