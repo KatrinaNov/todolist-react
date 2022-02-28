@@ -2,11 +2,14 @@ import React from 'react';
 import './App.css';
 import {AppBar, Box, Button, Toolbar} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
-import {IconButton, LinearProgress, Typography} from "@mui/material";
+import {Container, IconButton, LinearProgress, Typography} from "@mui/material";
 import {useAppSelector} from "./store/store";
 import {RequestStatusType} from "./reducers/app-reducer";
 import {ErrorSnackbar} from "./components/ErrorSnackBar";
 import TodolistsList from "./components/TodolistsList";
+import {Navigate, Route, Routes} from "react-router-dom";
+import {Login} from "./components/Login";
+import Page404 from "./components/Page404";
 
 function App() {
   const status = useAppSelector<RequestStatusType>(state => state.app.status)
@@ -33,7 +36,16 @@ function App() {
         </AppBar>
         {status === 'loading' && <LinearProgress color="success" />}
       </Box>
-      <TodolistsList/>
+      <Container fixed>
+        <Routes>
+          <Route path="/" element={<TodolistsList/>}/>
+          <Route path="login" element={<Login/>}/>
+          <Route path="/404" element={<Page404/>}/>
+          <Route path="*"  element={<Navigate to={"/404"}/>}/>
+        </Routes>
+      </Container>
+
+      {/*<TodolistsList/>*/}
       <ErrorSnackbar/>
     </div>
   );

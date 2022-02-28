@@ -112,9 +112,13 @@ export const fetchTodolistsTC = () => (dispatch: Dispatch) => {
   dispatch(setAppStatusAC('loading'))
   todolistApi.getTodos()
     .then(res => {
-      dispatch(setTodosAC(res.data))
-      dispatch(setAppStatusAC('succeeded'))
+        dispatch(setTodosAC(res.data))
+        dispatch(setAppStatusAC('succeeded'))
     })
+    .catch((error) => {
+      handleServerNetworkError(error.message, dispatch)
+    })
+
 }
 
 export const removeTodolistTC = (todolistId: string) => {

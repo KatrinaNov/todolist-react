@@ -40,6 +40,30 @@ export const todolistApi = {
   }
 }
 
+export const authAPI = {
+  me() {
+    return instance.get<BaseResponseType<AuthDataType>>('/auth/me');
+  },
+  login(data: LoginParamsType) {
+    return instance.post<LoginParamsType, AxiosResponse<BaseResponseType<{ userId: number }>>>('auth/login', data);
+  },
+  logout() {
+    return instance.delete<ResponseType>('auth/login');
+  }
+}
+
+export type AuthDataType = {
+  id: number
+  email: string
+  login: string
+}
+export type LoginParamsType = {
+  email: string
+  password: string
+  rememberMe?: boolean
+  captcha?: string
+}
+
 export type TodoType = {
   addedDate: string
   id: string
