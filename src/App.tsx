@@ -1,34 +1,50 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import {AppBar, Box, Button, Toolbar} from "@material-ui/core";
-import {Menu} from "@material-ui/icons";
-import {Container, IconButton, LinearProgress, Typography} from "@mui/material";
 import {useAppSelector} from "./store/store";
 import {initializeAppTC, RequestStatusType} from "./reducers/app-reducer";
-import {ErrorSnackbar} from "./components/ErrorSnackBar";
 import TodolistsList from "./components/TodolistsList";
-import {Navigate, Route, Routes} from "react-router-dom";
-import {Login} from "./components/Login";
 import Page404 from "./components/Page404";
 import {useDispatch} from "react-redux";
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import LinearProgress from '@mui/material/LinearProgress';
+import {Menu} from '@mui/icons-material';
+import {Navigate,  Route, Routes} from "react-router-dom";
+import {Box, CircularProgress} from "@mui/material";
+import {Login} from "./components/Login";
+import {ErrorSnackbar} from "./components/ErrorSnackBar";
 
 function App() {
   const status = useAppSelector<RequestStatusType>(state => state.app.status)
+  const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(initializeAppTC())
   }, [])
 
+  if (!isInitialized) {
+    return <div
+      style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+      <CircularProgress/>
+    </div>
+  }
+
+
   return (
     <div className="App">
       <Box sx={{flexGrow: 1}}>
+        <ErrorSnackbar/>
         <AppBar position="static">
           <Toolbar>
             <IconButton
               size="large"
               edge="start"
-              color="inherit"
+              color="success"
               aria-label="menu"
               sx={{mr: 2}}
             >
@@ -52,7 +68,7 @@ function App() {
       </Container>
 
       {/*<TodolistsList/>*/}
-      <ErrorSnackbar/>
+
     </div>
   );
 }

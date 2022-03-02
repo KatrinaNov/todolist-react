@@ -26,7 +26,7 @@ export const TodolistsList = () => {
     if (isLoggedIn) {
       dispatch(fetchTodolistsTC())
     }
-  }, [dispatch])
+  }, [dispatch, isLoggedIn])
 
   const addTodolist = useCallback((title: string) => {
     dispatch(addTodolistTC(title))
