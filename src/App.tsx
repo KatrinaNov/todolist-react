@@ -1,18 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {AppBar, Box, Button, Toolbar} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {Container, IconButton, LinearProgress, Typography} from "@mui/material";
 import {useAppSelector} from "./store/store";
-import {RequestStatusType} from "./reducers/app-reducer";
+import {initializeAppTC, RequestStatusType} from "./reducers/app-reducer";
 import {ErrorSnackbar} from "./components/ErrorSnackBar";
 import TodolistsList from "./components/TodolistsList";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {Login} from "./components/Login";
 import Page404 from "./components/Page404";
+import {useDispatch} from "react-redux";
 
 function App() {
   const status = useAppSelector<RequestStatusType>(state => state.app.status)
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(initializeAppTC())
+  }, [])
 
   return (
     <div className="App">

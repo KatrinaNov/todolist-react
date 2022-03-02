@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
 import {Container, Grid, Paper} from "@material-ui/core";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
   addTodolistTC, changeFilterAC,
   changeTodolistTitleTC,
@@ -9,19 +9,23 @@ import {
   TodolistDomainType
 } from "../reducers/todolistReducer";
 import {TaskStatuses} from "../api/todolists-api";
-import {useAppSelector} from "../store/store";
+import {AppRootStateType, useAppSelector} from "../store/store";
 import {addTaskTC, removeTaskTC, TasksType, updateTaskTC} from "../reducers/tasksReducer";
 import AddItemForm from "./AddItemForm";
 import Todolist from "./Todolist";
+import {Navigate} from "react-router-dom";
 
 
 export const TodolistsList = () => {
   let todolists = useAppSelector<Array<TodolistDomainType>>(state => state.todolists)
   let tasks = useAppSelector<TasksType>(state => state.tasks)
+  const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
   let dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchTodolistsTC())
+    if (isLoggedIn) {
+      dispatch(fetchTodolistsTC())
+    }
   }, [dispatch])
 
   const addTodolist = useCallback((title: string) => {
@@ -56,7 +60,9 @@ export const TodolistsList = () => {
     dispatch(removeTaskTC(id, todolistId));
   }, [dispatch]);
 
-
+  if (!isLoggedIn) {
+    return <Navigate to={"/login"}/>
+  }
 
   return (
       <Container fixed>
