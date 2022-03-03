@@ -39,3 +39,18 @@ export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch<ActionsTyp
     })
 }
 
+export const logoutTC = () => (dispatch: Dispatch<ActionsType>) => {
+  authAPI.logout()
+    .then(res => {
+      if (res.data.resultCode === 0) {
+        dispatch(setIsLoggedInAC(false))
+        dispatch(setAppStatusAC('succeeded'))
+      } else {
+        handleServerAppError(res.data, dispatch)
+      }
+    })
+    .catch((error) => {
+      handleServerNetworkError(error.message, dispatch)
+    })
+}
+

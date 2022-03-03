@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
-import {Container, Grid, Paper} from "@material-ui/core";
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import {useDispatch, useSelector} from "react-redux";
 import {
   addTodolistTC, changeFilterAC,
@@ -65,7 +66,7 @@ export const TodolistsList = () => {
   }
 
   return (
-      <Container fixed>
+      <>
         <Grid container style={{padding: "20px"}}><AddItemForm addItemCallback={addTodolist}/></Grid>
         <Grid container spacing={3}>
           {
@@ -93,7 +94,7 @@ export const TodolistsList = () => {
             })
           }
         </Grid>
-      </Container>
+      </>
   );
 }
 
